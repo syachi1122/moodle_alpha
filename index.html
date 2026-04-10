@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>moodle α公式 | moodleに＋αを</title>
+  <link rel="icon" type="image/png" href="./images/favicon.png">
+  <meta name="description" content="moodle α公式。Googleカレンダー連携、見やすい締切表示、モダンなUIでMoodleに＋αを。" />
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: rgba(255, 255, 255, 0.96);
+      --text: #111111;
+      --muted: #6e6e73;
+      --line: rgba(17, 17, 17, 0.08);
+      --accent-1: #4f2cc8;
+      --accent-2: #8b3db8;
+      --accent-3: #ff7a45;
+      --accent-4: #f5d547;
+      --shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(79, 44, 200, 0.16), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 122, 69, 0.12), transparent 26%),
+        linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 38%, #eef0f5 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(251, 251, 253, 0.72);
+      border-bottom: 1px solid rgba(17, 17, 17, 0.06);
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2) 42%, var(--accent-3) 78%, var(--accent-4));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 19px;
+      font-weight: 800;
+      box-shadow: 0 12px 24px rgba(79, 44, 200, 0.28);
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: -2px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      font-size: 0.95rem;
+      color: #3a3a3c;
+    }
+
+    .nav a {
+      position: relative;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav a:hover {
+      opacity: 0.7;
+    }
+
+    .nav-cta {
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+      box-shadow: 0 10px 24px rgba(95, 57, 196, 0.26);
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .section {
+      padding: 88px 24px;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding-top: 54px;
+      padding-bottom: 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 1fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(17, 17, 17, 0.06);
+      color: #4b4b50;
+      font-size: 0.9rem;
+      font-weight: 600;
+      backdrop-filter: blur(12px);
+    }
+
+    .eyebrow-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+      box-shadow: 0 0 16px rgba(139, 61, 184, 0.55);
+    }
+
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(3rem, 6vw, 5.9rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2) 38%, var(--accent-3) 72%, var(--accent-4));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      font-size: clamp(1.04rem, 2vw, 1.3rem);
+      color: #2f2f33;
+      max-width: 640px;
+      margin: 0 0 18px;
+    }
+
+    .hero-subcopy {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.98rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+      box-shadow: 0 14px 32px rgba(93, 54, 195, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      color: #1d1d1f;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .meta-chip {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(17, 17, 17, 0.06);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      border-radius: 50%;
+      filter: blur(18px);
+      z-index: 0;
+    }
+
+    .hero-visual::before {
+      width: 240px;
+      height: 240px;
+      background: rgba(98, 60, 204, 0.22);
+      top: -22px;
+      right: 14px;
+    }
+
+    .hero-visual::after {
+      width: 220px;
+      height: 220px;
+      background: rgba(255, 122, 69, 0.18);
+      bottom: 22px;
+      left: -12px;
+    }
+
+    .device-shell {
+      position: relative;
+      z-index: 1;
+      border-radius: 42px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(239,241,246,0.92));
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.2);
+    }
+
+    .device-screen {
+      border-radius: 28px;
+      overflow: hidden;
+      background: #dfe3eb;
+      border: 1px solid rgba(17,17,17,0.08);
+      aspect-ratio: 9 / 16;
+      min-height: 540px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .device-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .floating-card {
+      position: absolute;
+      right: -26px;
+      bottom: 30px;
+      width: min(280px, 54vw);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(17,17,17,0.08);
+      box-shadow: var(--shadow);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .floating-card strong {
+      display: block;
+      font-size: 0.94rem;
+      margin-bottom: 6px;
+    }
+
+    .floating-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 48px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: #7b52d6;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+
+    .section-desc {
+      margin: 0 auto;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .glass-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .concept-card {
+      padding: 28px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .concept-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(79, 44, 200, 0.15), rgba(255, 122, 69, 0.18));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #5b33c6;
+    }
+
+    .concept-card h3,
+    .feature-card h3,
+    .future-card h3,
+    .info-card h3 {
+      margin: 18px 0 10px;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+
+    .concept-card p,
+    .feature-card p,
+    .future-card p,
+    .info-card p,
+    .timeline-item p,
+    .link-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      padding: 28px;
+      min-height: 250px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      right: -46px;
+      bottom: -46px;
+      background: linear-gradient(135deg, rgba(79, 44, 200, 0.14), rgba(255, 122, 69, 0.16));
+      filter: blur(2px);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #4f2cc8, #ff7a45);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      box-shadow: 0 14px 26px rgba(79, 44, 200, 0.22);
+    }
+
+    .feature-point {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.93rem;
+      color: #3a3a3c;
+      font-weight: 600;
+      background: rgba(255,255,255,0.68);
+      border-radius: 999px;
+      padding: 8px 12px;
+      border: 1px solid rgba(17,17,17,0.06);
+    }
+
+    .showcase-wrap {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .showcase-image {
+      padding: 16px;
+    }
+
+    .showcase-image-inner {
+      background: linear-gradient(180deg, #f8f9fc, #e9edf4);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(17,17,17,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    .showcase-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .showcase-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .info-card {
+      padding: 26px;
+    }
+
+    .mini-label {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(79,44,200,0.1);
+      color: #5b33c6;
+      font-weight: 700;
+      font-size: 0.86rem;
+      margin-bottom: 12px;
+    }
+
+    .future-grid,
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .future-card,
+    .link-card {
+      padding: 28px;
+    }
+
+    .timeline {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 18px;
+      padding: 22px 24px;
+      align-items: start;
+    }
+
+    .timeline-date {
+      font-weight: 800;
+      color: #5b33c6;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-item strong {
+      display: block;
+      font-size: 1.06rem;
+      margin-bottom: 6px;
+    }
+
+    .link-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(17,17,17,0.06);
+      color: #3a3a3c;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffb200;
+    }
+
+    .link-row {
+      margin-top: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #4f2cc8;
+    }
+
+    .site-footer {
+      padding: 40px 24px 56px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      border-top: 1px solid rgba(17,17,17,0.08);
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .showcase-wrap,
+      .concept-grid,
+      .feature-grid,
+      .future-grid,
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+
+      .floating-card {
+        right: 16px;
+        bottom: 16px;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .section {
+        padding: 72px 18px;
+      }
+
+      .header-inner,
+      .footer-inner {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 15vw, 4.4rem);
+      }
+
+      h2 {
+        font-size: clamp(2rem, 11vw, 2.9rem);
+      }
+
+      .hero-copy {
+        font-size: 1.02rem;
+      }
+
+      .device-shell {
+        padding: 12px;
+        border-radius: 30px;
+      }
+
+      .device-screen {
+        min-height: 440px;
+        border-radius: 22px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .future-card,
+      .feature-card,
+      .concept-card,
+      .link-card,
+      .info-card {
+        padding: 24px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="moodle α公式 トップへ戻る">
+        <div class="brand-mark">mα</div>
+        <div class="brand-text">
+          <div class="brand-title">moodle α公式</div>
+          <div class="brand-sub">moodleに＋αを</div>
+        </div>
+      </a>
+      <nav class="nav" aria-label="グローバルナビゲーション">
+        <a href="#concept">コンセプト</a>
+        <a href="#features">機能紹介</a>
+        <a href="#showcase">導入イメージ</a>
+        <a href="#roadmap">今後の予定</a>
+        <a href="#download" class="nav-cta">ダウンロード</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="section hero">
+      <div class="container hero-grid">
+        <div class="reveal is-visible">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            学生のためのMoodle拡張
+          </div>
+          <h1>
+            <span class="gradient-text">moodle α</span><br />
+            公式サイト
+          </h1>
+          <p class="hero-copy">
+            Moodleを、もっと直感的に。もっと見やすく。もっと使いやすく。
+          </p>
+          <p class="hero-subcopy">
+            Googleカレンダー連携、締め切りの見える化、近代的なUI、ショートカット追加。
+            日々の学習管理を、スマホでもPCでも、よりスムーズに進化させます。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#download">ダウンロードを見る</a>
+            <a class="btn btn-secondary" href="#features">機能を確認する</a>
+          </div>
+          <div class="hero-meta">
+            <span class="meta-chip">Chromeウェブストア公開予定</span>
+            <span class="meta-chip">日本語対応</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal is-visible">
+          <div class="device-shell">
+            <div class="device-screen">
+              <img src="./images/dashboard.jpeg" alt="moodle α導入後のダッシュボードイメージ" />
+            </div>
+          </div>
+          <div class="floating-card glass-card">
+            <strong>締め切りを、ひと目で。</strong>
+            <p>
+              近い課題を強調表示し、カレンダーとあわせて学習の流れをすっきり整理します。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="concept">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-kicker">Concept</span>
+          <h2>学習体験に、洗練という＋αを。</h2>
+          <p class="section-desc">
+            moodle αは、学生が毎日向き合うMoodleを、より自然で、より快適で、より現代的な体験へ導くための拡張です。
+          </p>
+        </div>
+        <div class="concept-grid">
+          <article class="concept-card glass-card reveal">
+            <div class="concept-number">01</div>
+            <div>
+              <h3>迷わないUI</h3>
+              <p>情報の整理と余白を見直し、必要な機能へすばやくたどり着けるダッシュボードを目指します。</p>
+            </div>
+          </article>
+          <article class="concept-card glass-card reveal">
+            <div class="concept-number">02</div>
+            <div>
+              <h3>見逃さない締切</h3>
+              <p>近い課題を強く、重要な予定を自然に。締切の把握を、感覚的に分かる表示へ変えます。</p>
+            </div>
+          </article>
+          <article class="concept-card glass-card reveal">
+            <div class="concept-number">03</div>
+            <div>
+              <h3>日常に溶け込む導線</h3>
+              <p>スマホ通知やデスクトップショートカットを通して、Moodleをもっと身近な存在にします。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-kicker">Features</span>
+          <h2>学生の毎日に、必要な機能だけを。</h2>
+          <p class="section-desc">
+            ただ機能を増やすのではなく、学習の負担を減らすための価値に絞って設計しています。
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card glass-card reveal">
+            <div class="feature-icon">GC</div>
+            <h3>Googleカレンダー連携</h3>
+            <p>課題や予定をGoogleカレンダーに取り込み、スマートフォンで通知。提出忘れの防止をサポートします。</p>
+            <div class="feature-point">スマホで課題を受け取る</div>
+          </article>
+          <article class="feature-card glass-card reveal">
+            <div class="feature-icon">UI</div>
+            <h3>近代的で分かりやすいUI</h3>
+            <p>情報の優先度を整理し、見たいものを迷わず確認できるダッシュボードへ。毎日の操作がより快適になります。</p>
+            <div class="feature-point">必要な情報にすぐ届く</div>
+          </article>
+          <article class="feature-card glass-card reveal">
+            <div class="feature-icon">DL</div>
+            <h3>締め切り表示を強化</h3>
+            <p>締切の近い課題を見やすく整理し、危険な予定をひと目で把握。今日やるべきことがすぐ分かります。</p>
+            <div class="feature-point">締切を直感的に把握</div>
+          </article>
+          <article class="feature-card glass-card reveal">
+            <div class="feature-icon">PC</div>
+            <h3>デスクトップにショートカット追加</h3>
+            <p>PCからMoodleへ最短でアクセス。毎回検索する手間を減らし、日常の導線をすっきりまとめます。</p>
+            <div class="feature-point">ワンクリックでMoodleへ</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="showcase">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-kicker">Showcase</span>
+          <h2>導入後の景色が、学習の印象を変える。</h2>
+          <p class="section-desc">
+            見やすく整理された締切表示とカレンダーの統合で、課題管理をもっと自然なものにします。
+          </p>
+        </div>
+        <div class="showcase-wrap">
+          <div class="showcase-image glass-card reveal">
+            <div class="showcase-image-inner">
+              <img src="./images/dashboard.jpeg" alt="moodle αのダッシュボード表示例" />
+            </div>
+          </div>
+          <div class="showcase-side">
+            <article class="info-card glass-card reveal">
+              <span class="mini-label">締切一覧</span>
+              <h3>近い課題から、優先順位が分かる。</h3>
+              <p>赤・黄・青の視認性を活かした表示で、今すぐ取り組むべき課題が自然と目に入ります。</p>
+            </article>
+            <article class="info-card glass-card reveal">
+              <span class="mini-label">カレンダー連携</span>
+              <h3>予定と課題を、ひとつの流れで。</h3>
+              <p>Googleカレンダーとの連携により、Moodleの情報を日常のスケジュール管理へなめらかにつなげます。</p>
+            </article>
+            <article class="info-card glass-card reveal">
+              <span class="mini-label">導線の改善</span>
+              <h3>欲しい場所へ、すばやく移動。</h3>
+              <p>マイコースや検索などの入口を整理し、PCでもスマホでもストレスの少ない導線を実現します。</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-kicker">Roadmap</span>
+          <h2>これからのmoodle α。</h2>
+          <p class="section-desc">
+            すでに便利なだけで終わらず、今後も学生の使いやすさを中心に機能を進化させていきます。
+          </p>
+        </div>
+        <div class="future-grid">
+          <article class="future-card glass-card reveal">
+            <h3>授業表示を時間割式に</h3>
+            <p>マイコースの一覧を、より学校生活に近い時間割ベースの見せ方へ。必要な授業へ直感的にアクセスできる構成を検討中です。</p>
+          </article>
+          <article class="future-card glass-card reveal">
+            <h3>ダークモード対応</h3>
+            <p>夜間の学習や長時間利用でも見やすく、目にやさしい表示へ。サイト全体の雰囲気を保ちながらの最適化を予定しています。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="updates">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-kicker">Updates</span>
+          <h2>更新履歴</h2>
+          <p class="section-desc">開発の歩みと、これからの公開情報をシンプルにまとめています。</p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item glass-card reveal">
+            <div class="timeline-date">2025.11</div>
+            <div>
+              <strong>プロジェクト開始</strong>
+              <p>moodle αの構想と開発をスタートしました。</p>
+            </div>
+          </article>
+          <article class="timeline-item glass-card reveal">
+            <div class="timeline-date">2025.12</div>
+            <div>
+              <strong>β版 ver.9.0.1 が完成</strong>
+              <p>機能改善とUI調整を重ね、β版 ver.9.0.1 が完成しました。</p>
+            </div>
+          </article>
+          <article class="timeline-item glass-card reveal">
+            <div class="timeline-date">2026.04</div>
+            <div>
+              <strong>公式サイト公開</strong>
+              <p>moodle α公式サイトを公開し、機能紹介や今後の情報発信を開始しました。</p>
+            </div>
+          </article>
+          <article class="timeline-item glass-card reveal">
+            <div class="timeline-date">2026</div>
+            <div>
+              <strong>β版プレビュー配布・α版リリース予定</strong>
+              <p>今後、β版のプレビュー配布とα版のリリースを予定しています。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-kicker">Instagram</span>
+          <h2>最新情報はInstagramで。</h2>
+          <p class="section-desc">
+            お知らせ、お問い合わせ、使い方ガイドは公式Instagramにて発信予定です。
+            最新情報や導入方法を、分かりやすくお届けします。
+          </p>
+        </div>
+        <div class="links-grid" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
+          <article class="link-card glass-card reveal" style="text-align: center;">
+            <div>
+              <div class="status">準備中</div>
+              <h3>公式Instagram</h3>
+              <p>
+                アップデート情報、導入ガイド、お問い合わせ対応などは
+                公式Instagramにてご案内いたします。
+              </p>
+            </div>
+            <span class="link-row" style="justify-content: center;">
+              Instagramリンクを追加予定 →
+            </span>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© 2026 moodle α公式</div>
+      <div>moodleに＋αを</div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.14,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
